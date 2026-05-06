@@ -43,7 +43,7 @@ $policy = Get-SPOTenantVersionPolicy |
 Get-SPOTenantApplyFileVersionPolicyJobImpact -VersionPolicy $policy
 ```
 
-Estimates the impact of a more aggressive policy (50 major versions) compared to the current tenant policy.
+Estimates the impact of a trimming job run with a modified policy that limits to 50 major versions.
 
 ## PARAMETERS
 
