@@ -372,7 +372,7 @@ Get the structural navigation caching state for a web.
 Returns SharePoint Online organization properties.
 
 ### [Get-SPOTenantApplyFileVersionPolicyJobImpact](Get-SPOTenantApplyFileVersionPolicyJobImpact.md)
-Estimates how many versions would be trimmed and how much storage would be freed by applying a given version policy to the tenant's collected version dataset. SharePoint Advanced Management license or Copilot license is required to run this cmdlet.
+Estimates how many versions would be trimmed and how much storage would be freed if a trimming job were run with the given version policy. SharePoint Advanced Management license or Copilot license is required to run this cmdlet.
 
 ### [Get-SPOTenantApplyFileVersionPolicyJobProgress](Get-SPOTenantApplyFileVersionPolicyJobProgress.md)
 Gets the status for a tenant apply file version policy job. SharePoint Advanced Management license or Copilot license is required to run this cmdlet.
@@ -438,7 +438,7 @@ This cmdlet allows SharePoint administrators to check the status of a user or si
 This cmdlet will return the user principal name, current location, and corresponding OneDrive for Business url, and the site ID. This cmdlet only supports Multi-Geo OneDrive sites.
 
 ### [Get-SPOVersionPolicyWithChanges](Get-SPOVersionPolicyWithChanges.md)
-Returns a locally modified copy of a version policy without sending any changes to the server.
+Returns a locally modified copy of a version policy.
 
 ### [Get-SPOWebTemplate](Get-SPOWebTemplate.md)
 Displays all site templates that match the given identity.

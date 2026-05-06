@@ -14,7 +14,7 @@ ms.reviewer:
 
 ## SYNOPSIS
 
-Estimates how many versions would be trimmed and how much storage would be freed by applying a given version policy to the tenant's collected version dataset. SharePoint Advanced Management license or Copilot license is required to run this cmdlet.
+Estimates how many versions would be trimmed and how much storage would be freed if a trimming job were run with the given version policy. SharePoint Advanced Management license or Copilot license is required to run this cmdlet.
 
 > [!NOTE]
 > This feature is currently in preview and may not be available in your tenant.
@@ -27,7 +27,7 @@ Get-SPOTenantApplyFileVersionPolicyJobImpact -VersionPolicy <SPOFileVersionPolic
 
 ## DESCRIPTION
 
-Queries the version dataset collected by a previously completed `New-SPOTenantApplyFileVersionPolicyJob -CollectVersionData` job and returns an estimated impact object showing how many versions would be deleted and how much storage would be freed if the specified version policy were applied.
+Queries the version dataset collected by a previously completed `New-SPOTenantApplyFileVersionPolicyJob -CollectVersionData` job and returns an estimated impact object showing how many versions would be trimmed and how much storage would be freed if a trimming job were run with the given version policy.
 
 > [!NOTE]
 > - A completed job that was started with `-CollectVersionData` is required before running this cmdlet. Use `Get-SPOTenantApplyFileVersionPolicyJobProgress` to confirm the job has completed.
@@ -38,8 +38,10 @@ Queries the version dataset collected by a previously completed `New-SPOTenantAp
 
 ### Example 1
 ```powershell
-$policy = Get-SPOTenantVersionPolicy | Get-SPOVersionPolicyWithChanges -MajorVersionLimit 50
-Get-SPOTenantApplyFileVersionPolicyJobImpact -VersionPolicy $policy
+Get-SPOTenantApplyFileVersionPolicyJobImpact -VersionPolicy (
+    Get-SPOTenantVersionPolicy |
+        Get-SPOVersionPolicyWithChanges -MajorVersionLimit 50
+)
 ```
 
 Estimates the impact of a more aggressive policy (50 major versions) compared to the current tenant policy.

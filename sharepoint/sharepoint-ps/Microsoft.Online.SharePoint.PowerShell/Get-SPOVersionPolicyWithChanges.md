@@ -14,25 +14,32 @@ ms.reviewer:
 
 ## SYNOPSIS
 
-Returns a locally modified copy of a version policy without sending any changes to the server.
+Returns a locally modified copy of a version policy.
 
 ## SYNTAX
 
+### Default (Default)
 ```
 Get-SPOVersionPolicyWithChanges -VersionPolicy <SPOFileVersionPolicySettings> [-MajorVersionLimit <Int32>]
  [-ExpireVersionsAfterDays <Int32>] [-EnableAutoExpirationVersionTrim <Boolean>] [<CommonParameters>]
+```
 
+### FileType
+```
 Get-SPOVersionPolicyWithChanges -VersionPolicy <SPOFileVersionPolicySettings> -FileType <String>
  [-MajorVersionLimit <Int32>] [-ExpireVersionsAfterDays <Int32>]
  [-EnableAutoExpirationVersionTrim <Boolean>] [<CommonParameters>]
+```
 
+### FileTypeRemove
+```
 Get-SPOVersionPolicyWithChanges -VersionPolicy <SPOFileVersionPolicySettings> -FileType <String> -Remove
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Returns a modified copy of the given version policy. All changes are local — nothing is sent to the server. This cmdlet is intended to be used in a pipeline with `Get-SPOTenantVersionPolicy` to build a modified policy that can then be passed to `New-SPOTenantApplyFileVersionPolicyJob` or `Get-SPOTenantApplyFileVersionPolicyJobImpact`.
+Returns a modified copy of the given version policy. This cmdlet is intended to be used in a pipeline with `Get-SPOTenantVersionPolicy` to build a modified policy that can then be passed to `New-SPOTenantApplyFileVersionPolicyJob` or `Get-SPOTenantApplyFileVersionPolicyJobImpact`.
 
 When `-FileType` is omitted, the default policy settings are modified. When `-FileType` is specified, the per-file-type override for that type is created or updated. For supported file type names, see [File type version limits in SharePoint](/sharepoint/file-type-version-limits).
 
@@ -42,21 +49,27 @@ Use `-Remove` with `-FileType` to delete a per-file-type override.
 
 ### Example 1
 ```powershell
-$policy = Get-SPOTenantVersionPolicy | Get-SPOVersionPolicyWithChanges -MajorVersionLimit 100
+Get-SPOTenantVersionPolicy |
+    Get-SPOVersionPolicyWithChanges -MajorVersionLimit 100
 ```
 
 Retrieves the current tenant version policy and returns a copy with the default major version limit changed to 100.
 
 ### Example 2
 ```powershell
-$policy = Get-SPOTenantVersionPolicy | Get-SPOVersionPolicyWithChanges -FileType "video" -MajorVersionLimit 50 -ExpireVersionsAfterDays 180
+Get-SPOTenantVersionPolicy |
+    Get-SPOVersionPolicyWithChanges `
+        -FileType "video" `
+        -MajorVersionLimit 50 `
+        -ExpireVersionsAfterDays 180
 ```
 
 Retrieves the current tenant version policy and returns a copy with a per-file-type override for `video` files that limits to 50 major versions and expires versions after 180 days.
 
 ### Example 3
 ```powershell
-$policy = Get-SPOTenantVersionPolicy | Get-SPOVersionPolicyWithChanges -FileType "video" -Remove
+Get-SPOTenantVersionPolicy |
+    Get-SPOVersionPolicyWithChanges -FileType "video" -Remove
 ```
 
 Retrieves the current tenant version policy and returns a copy with the `video` file type override removed, so `video` files will fall back to the default policy.

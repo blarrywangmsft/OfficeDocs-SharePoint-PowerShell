@@ -22,13 +22,20 @@ Queues a job to apply the tenant-level file version policy across all sites. Sha
 
 ## SYNTAX
 
+### WithExistingVersionPolicy (Default)
 ```
 New-SPOTenantApplyFileVersionPolicyJob [-TrimVersions] [-SetVersionPolicy] [-WhatIf] [-Confirm]
  [<CommonParameters>]
+```
 
+### WithVersionPolicy
+```
 New-SPOTenantApplyFileVersionPolicyJob -VersionPolicy <SPOFileVersionPolicySettings> [-TrimVersions]
  [-WhatIf] [-Confirm] [<CommonParameters>]
+```
 
+### CollectData
+```
 New-SPOTenantApplyFileVersionPolicyJob -CollectVersionData [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -83,7 +90,8 @@ Example 4 starts a job to collect version data across all sites. Once the job co
 
 ### Example 5
 ```powershell
-$policy = Get-SPOTenantVersionPolicy | Get-SPOVersionPolicyWithChanges -MajorVersionLimit 100
+$policy = Get-SPOTenantVersionPolicy |
+    Get-SPOVersionPolicyWithChanges -MajorVersionLimit 100
 New-SPOTenantApplyFileVersionPolicyJob -TrimVersions -VersionPolicy $policy
 ```
 
