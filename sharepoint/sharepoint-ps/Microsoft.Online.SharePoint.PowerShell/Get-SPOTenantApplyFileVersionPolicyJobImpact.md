@@ -38,8 +38,7 @@ Queries the version dataset collected by a previously completed `New-SPOTenantAp
 
 ### Example 1
 ```powershell
-$policy = Get-SPOTenantVersionPolicy |
-    Get-SPOVersionPolicyWithChanges -MajorVersionLimit 50
+$policy = Get-SPOTenantVersionPolicy |  Get-SPOVersionPolicyWithChanges -MajorVersionLimit 50
 Get-SPOTenantApplyFileVersionPolicyJobImpact -VersionPolicy $policy
 ```
 
@@ -72,13 +71,6 @@ This cmdlet supports the common parameters: `-Debug`, `-ErrorAction`, `-ErrorVar
 ## OUTPUTS
 
 ### Microsoft.Online.SharePoint.TenantAdministration.SPOTenantVersionPolicyImpact
-
-The returned object has the following properties:
-
-| Property | Type | Description |
-|---|---|---|
-| TrimCount | Int32 | Estimated number of versions that would be deleted. |
-| TrimStorageGB | Double | Estimated storage freed by trimming, in gigabytes. |
 
 ## NOTES
 

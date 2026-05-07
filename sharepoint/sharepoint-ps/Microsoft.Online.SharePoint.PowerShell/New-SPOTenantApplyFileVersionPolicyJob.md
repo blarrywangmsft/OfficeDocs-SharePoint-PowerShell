@@ -90,8 +90,7 @@ Example 4 starts a job to collect version data across all sites. Once the job co
 
 ### Example 5
 ```powershell
-$policy = Get-SPOTenantVersionPolicy |
-    Get-SPOVersionPolicyWithChanges -MajorVersionLimit 100
+$policy = Get-SPOTenantVersionPolicy | Get-SPOVersionPolicyWithChanges -MajorVersionLimit 100
 New-SPOTenantApplyFileVersionPolicyJob -TrimVersions -VersionPolicy $policy
 ```
 

@@ -49,27 +49,21 @@ Use `-Remove` with `-FileType` to delete a per-file-type override.
 
 ### Example 1
 ```powershell
-Get-SPOTenantVersionPolicy |
-    Get-SPOVersionPolicyWithChanges -MajorVersionLimit 100
+Get-SPOTenantVersionPolicy | Get-SPOVersionPolicyWithChanges -MajorVersionLimit 100
 ```
 
 Retrieves the current tenant version policy and returns a copy with the default major version limit changed to 100.
 
 ### Example 2
 ```powershell
-Get-SPOTenantVersionPolicy |
-    Get-SPOVersionPolicyWithChanges `
-        -FileType "video" `
-        -MajorVersionLimit 50 `
-        -ExpireVersionsAfterDays 180
+Get-SPOTenantVersionPolicy | Get-SPOVersionPolicyWithChanges -FileType "video" -MajorVersionLimit 50 -ExpireVersionsAfterDays 180
 ```
 
 Retrieves the current tenant version policy and returns a copy with a per-file-type override for `video` files that limits to 50 major versions and expires versions after 180 days.
 
 ### Example 3
 ```powershell
-Get-SPOTenantVersionPolicy |
-    Get-SPOVersionPolicyWithChanges -FileType "video" -Remove
+Get-SPOTenantVersionPolicy | Get-SPOVersionPolicyWithChanges -FileType "video" -Remove
 ```
 
 Retrieves the current tenant version policy and returns a copy with the `video` file type override removed, so `video` files will fall back to the default policy.
@@ -78,6 +72,8 @@ Retrieves the current tenant version policy and returns a copy with the `video` 
 
 ### -EnableAutoExpirationVersionTrim
 When `$true`, uses automatic expiration, where Microsoft manages the expiration schedule. When `$false`, uses the manual expiration schedule defined by `-MajorVersionLimit` and `-ExpireVersionsAfterDays`.
+
+When `EnableAutoExpirationVersionTrim` is `$true`, `MajorVersionLimit` is always 500 and `ExpireVersionsAfterDays` is always 30. As a result, switching `-EnableAutoExpirationVersionTrim` from `$false` to `$true` sets `MajorVersionLimit` to 500 and `ExpireVersionsAfterDays` to 30.
 
 Applies to the default policy or the file type specified by `-FileType`.
 
@@ -95,6 +91,8 @@ Accept wildcard characters: False
 
 ### -ExpireVersionsAfterDays
 The number of days after which versions expire. Set to `0` to disable time-based expiration.
+
+Specifying `-ExpireVersionsAfterDays` when the policy has `EnableAutoExpirationVersionTrim` set to `$true` throws an error.
 
 Applies to the default policy or the file type specified by `-FileType`.
 
@@ -127,6 +125,8 @@ Accept wildcard characters: False
 
 ### -MajorVersionLimit
 The maximum number of major versions to retain.
+
+Specifying `-ExpireVersionsAfterDays` when the policy has `EnableAutoExpirationVersionTrim` set to `$true` throws an error.
 
 Applies to the default policy or the file type specified by `-FileType`.
 
@@ -184,11 +184,6 @@ This cmdlet supports the common parameters: `-Debug`, `-ErrorAction`, `-ErrorVar
 ### Microsoft.Online.SharePoint.TenantAdministration.SPOFileVersionPolicySettings
 
 ## NOTES
-
-When `EnableAutoExpirationVersionTrim` is `$true`, `MajorVersionLimit` is always 500 and `ExpireVersionsAfterDays` is always 30. As a result:
-
-- Switching `-EnableAutoExpirationVersionTrim` from `$false` to `$true` sets `MajorVersionLimit` to 500 and `ExpireVersionsAfterDays` to 30, overriding any values provided for those parameters.
-- Specifying `-MajorVersionLimit` or `-ExpireVersionsAfterDays` when the policy has `EnableAutoExpirationVersionTrim` set to `$true` throws an error.
 
 Always review the returned policy object before passing it to `New-SPOTenantApplyFileVersionPolicyJob` or `Get-SPOTenantApplyFileVersionPolicyJobImpact` to confirm it reflects the intended configuration.
 
